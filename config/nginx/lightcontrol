@@ -1,9 +1,0 @@
-server {
-    listen 80;
-    server_name 10.0.0.89;
-
-    location /light {
-        include uwsgi_params;
-        uwsgi_pass unix:/opt/lightcontrol/lightcontrol.sock;
-    }
-}

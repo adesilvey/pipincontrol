@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    # Enter ip below
+    server_name 127.0.0.1;
+
+    location /pin {
+        include uwsgi_params;
+        uwsgi_pass unix:/opt/pipincontrol/pipincontrol.sock;
+    }
+}

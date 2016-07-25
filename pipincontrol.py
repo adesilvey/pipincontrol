@@ -1,16 +1,12 @@
 from time import sleep
 import subprocess
 
-from flask import Flask
 import RPi.GPIO as GPIO
-
-app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-@app.route('/light/<pin>/on')
-def light_on(pin):
+def set_pin_high(pin):
     pin = int(pin)
 
     GPIO.setup(pin, GPIO.OUT)
@@ -19,10 +15,7 @@ def light_on(pin):
     GPIO.output(pin, GPIO.HIGH)
     sleep(0.2)
 
-    return 'Light on pin ' + str(pin) + ' turned on'
-
-@app.route('/light/<pin>/off')
-def light_off(pin):
+def set_pin_low(pin):
     pin = int(pin)
 
     GPIO.setup(pin, GPIO.OUT)
@@ -31,13 +24,7 @@ def light_off(pin):
     GPIO.output(pin, GPIO.LOW)
     sleep(0.2)
 
-    return 'Light on pin ' + str(pin) + ' turned off'
-
-@app.route('/light/<pin>/status')
-def light_status(pin):
+def get_pin_status(pin):
     status = subprocess.check_output(['gpio', '-g', 'read', pin])
-    
-    return str(status)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    return str(status)
